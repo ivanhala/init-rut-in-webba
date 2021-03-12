@@ -1,4 +1,8 @@
 function wbk_on_form_rendered( service ){
+    jQuery('#wbk-book_appointment').css('visibility','hidden');
+    jQuery('.wbk-inner-container').find('.wpcf7 > form').each(function () {
+        wpcf7.init(jQuery(this)[0]);        
+    });
     var fields = document.getElementsByClassName('wpcf7-validates-as-rut');
       for (var i = 0; i < fields.length; ++i) {
         var field = fields[i];
@@ -16,7 +20,14 @@ function wbk_on_form_rendered( service ){
           }
         }
       }
+    document.addEventListener( 'wpcf7submit', function( event ) {
+        if ( form_id == event.detail.contactFormId ) {
+            jQuery('#wbk-book_appointment').trigger('click');
+             
+      }
+    }, false );  
 }
+
 function cf7rf_ready(callback){
   // in case the document is already rendered
   if (document.readyState!='loading') callback();
